@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 import { HairStyle } from './hairstyle.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PageOptionsDto } from 'src/common/pageoptions.dto';
+import { PageDto } from 'src/common/page.dto';
 
 @Injectable()
 export class HairStyleService {
@@ -68,10 +68,7 @@ export class HairStyleService {
     }
     return hairstyle;
   }
-  async getAllHairStylesByGender(
-    gender: string,
-    pageOptionsDto: PageOptionsDto,
-  ) {
+  async getAllHairStylesByGender(gender: string, pageOptionsDto: PageDto) {
     const { page, limit } = pageOptionsDto;
     const hairstylesQuery = this.hairstyleModel.find({ gender: gender });
     const countQuery = this.hairstyleModel.countDocuments({ gender: gender });
@@ -99,10 +96,7 @@ export class HairStyleService {
     };
   }
 
-  async getAllHairStylesByCategory(
-    category: string,
-    pageOptionsDto: PageOptionsDto,
-  ) {
+  async getAllHairStylesByCategory(category: string, pageOptionsDto: PageDto) {
     const { page, limit } = pageOptionsDto;
     const hairstylesQuery = this.hairstyleModel.find({ category: category });
     const countQuery = this.hairstyleModel.countDocuments({
@@ -135,7 +129,7 @@ export class HairStyleService {
   async getAllHairStylesByGenderAndCategory(
     gender: string,
     category: string,
-    pageOptionsDto: PageOptionsDto,
+    pageOptionsDto: PageDto,
   ): Promise<{ results: HairStyle[]; totalCount: number; totalPages: number }> {
     const { page, limit } = pageOptionsDto;
 

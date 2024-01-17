@@ -1,18 +1,16 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-export class PageDto<T> {
-  @ApiProperty({ isArray: true })
-  readonly results: T[];
+export class PageDto {
+  @ApiPropertyOptional({
+    minimum: 1,
+    default: 1,
+  })
+  readonly page: number = 1;
 
   @ApiProperty()
-  totalCount: number;
+  readonly limit: number;
 
-  @ApiProperty()
-  totalPages: number;
-
-  constructor(results: T[], totalCount: number, totalPages: number) {
-    this.results = results;
-    this.totalCount = totalCount;
-    this.totalPages = totalPages;
+  get skip(): number {
+    return (this.page - 1) * this.limit;
   }
 }
