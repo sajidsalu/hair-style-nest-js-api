@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { HairStyleService } from './hairstyle.service';
-import { PageOptionsDto } from 'src/common/pageoptions.dto';
+import { PageDto } from 'src/common/page.dto';
 import { HairStyle } from './hairstyle.model';
 
 @Controller('hairstyles')
@@ -40,7 +40,7 @@ export class HairStyleController {
   @Get('gender/:gender')
   async getAllHairstylesByGender(
     @Param('gender') gender: string,
-    @Query() PageOptionsDto: PageOptionsDto,
+    @Query() PageOptionsDto: PageDto,
   ): Promise<{ results: HairStyle[]; totalCount: number; totalPages: number }> {
     return this.hairstyleService.getAllHairStylesByGender(
       gender,
@@ -51,7 +51,7 @@ export class HairStyleController {
   @Get('category/:category')
   async getAllHairstylesByCategory(
     @Param('category') category: string,
-    @Query() PageOptionsDto: PageOptionsDto,
+    @Query() PageOptionsDto: PageDto,
   ): Promise<{ results: HairStyle[]; totalCount: number; totalPages: number }> {
     return this.hairstyleService.getAllHairStylesByGender(
       category,
@@ -63,7 +63,7 @@ export class HairStyleController {
   async getAllHairstylesByGenderAndCategory(
     @Param('gender') gender: string,
     @Param('category') category: string,
-    @Query() pageOptionsDto: PageOptionsDto,
+    @Query() pageOptionsDto: PageDto,
   ): Promise<{ results: HairStyle[]; totalCount: number; totalPages: number }> {
     return this.hairstyleService.getAllHairStylesByGenderAndCategory(
       gender,
