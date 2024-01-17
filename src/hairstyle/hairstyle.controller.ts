@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { HairStyleService } from './hairstyle.service';
-import { PageDto } from 'src/common/page.dto';
+import { PageDto } from '../common/page.dto';
 import { HairStyle } from './hairstyle.model';
 
 @Controller('hairstyles')

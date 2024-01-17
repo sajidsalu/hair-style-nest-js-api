@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 import { HairStyle } from './hairstyle.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PageDto } from 'src/common/page.dto';
+import { PageDto } from '../common/page.dto';
 
 @Injectable()
 export class HairStyleService {
