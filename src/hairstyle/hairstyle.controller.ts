@@ -1,5 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { HairStyleService } from './hairstyle.service';
+import { PageOptionsDto } from 'src/common/pageoptions.dto';
+import { HairStyle } from './hairstyle.model';
 
 @Controller('hairstyles')
 export class HairStyleController {
@@ -33,5 +35,40 @@ export class HairStyleController {
   @Get(':id')
   async getHairStyleById(@Param('id') hairStyleId: string) {
     return await this.hairstyleService.getHairStyleById(hairStyleId);
+  }
+
+  @Get('gender/:gender')
+  async getAllHairstylesByGender(
+    @Param('gender') gender: string,
+    @Query() PageOptionsDto: PageOptionsDto,
+  ): Promise<{ results: HairStyle[]; totalCount: number; totalPages: number }> {
+    return this.hairstyleService.getAllHairStylesByGender(
+      gender,
+      PageOptionsDto,
+    );
+  }
+
+  @Get('category/:category')
+  async getAllHairstylesByCategory(
+    @Param('category') category: string,
+    @Query() PageOptionsDto: PageOptionsDto,
+  ): Promise<{ results: HairStyle[]; totalCount: number; totalPages: number }> {
+    return this.hairstyleService.getAllHairStylesByGender(
+      category,
+      PageOptionsDto,
+    );
+  }
+
+  @Get('gender/:gender/category/:category')
+  async getAllHairstylesByGenderAndCategory(
+    @Param('gender') gender: string,
+    @Param('category') category: string,
+    @Query() pageOptionsDto: PageOptionsDto,
+  ): Promise<{ results: HairStyle[]; totalCount: number; totalPages: number }> {
+    return this.hairstyleService.getAllHairStylesByGenderAndCategory(
+      gender,
+      category,
+      pageOptionsDto,
+    );
   }
 }
