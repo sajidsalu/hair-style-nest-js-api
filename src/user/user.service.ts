@@ -40,6 +40,25 @@ export class UserService {
       imageUrl: user.imageUrl,
     };
   }
+
+  async getUserByEmailAndPassword(email: string, password: string) {
+    const user = await this.userModel.findOne({ email, password }).exec();
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      createdDate: user.createdDate,
+      password: user.password,
+      type: user.type,
+      imageUrl: user.imageUrl,
+    };
+  }
+
   private async findUser(userId: string) {
     let user;
     try {

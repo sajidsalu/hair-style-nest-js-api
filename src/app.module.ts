@@ -7,9 +7,11 @@ import { GenderModule } from './gender/gender.module';
 import { CategoryModule } from './category/category.module';
 import { HairstyleModule } from './hairstyle/hairstyle.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    AuthModule,
     UserModule,
     GenderModule,
     CategoryModule,
