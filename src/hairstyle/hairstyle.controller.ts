@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { HairStyleService } from './hairstyle.service';
 import { PageDto } from '../common/page.dto';
 import { HairStyle } from './hairstyle.model';
@@ -70,5 +78,13 @@ export class HairStyleController {
       category,
       pageOptionsDto,
     );
+  }
+
+  @Patch(':id')
+  async updateGender(
+    @Param('id') hairStyleId: string,
+    @Body('categoryId') categoryId?: string,
+  ) {
+    await this.hairstyleService.updateHairStyleById(hairStyleId, categoryId);
   }
 }
