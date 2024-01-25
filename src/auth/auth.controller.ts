@@ -11,7 +11,7 @@ export class AuthController {
     @Body('email') email: string,
     @Body('password') password: string,
   ): Promise<
-    | { access_token: string; refresh_token: string }
+    | { access_token: string; refresh_token: string; user_id: string }
     | { status: number; message: string }
   > {
     console.log('Received login request:', email, password);

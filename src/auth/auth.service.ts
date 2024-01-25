@@ -29,7 +29,7 @@ export class AuthService {
     email: string,
     password: string,
   ): Promise<
-    | { access_token: string; refresh_token: string }
+    | { access_token: string; refresh_token: string; user_id: string }
     | { status: number; message: string }
   > {
     const UserNotFound = {
@@ -41,6 +41,7 @@ export class AuthService {
       const payload = { username: email, id: user.id };
       if (user) {
         return {
+          user_id: user?.id,
           access_token: this.jwtService.sign(payload),
           refresh_token: this.generateRefreshToken(), // Generate or fetch refresh token as needed
         };
