@@ -8,9 +8,11 @@ import { CategoryModule } from './category/category.module';
 import { HairstyleModule } from './hairstyle/hairstyle.module';
 import { UserModule } from './user/user.module';
 import { CorsMiddleware } from './common/cors.middleware';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    AuthModule,
     UserModule,
     GenderModule,
     CategoryModule,
