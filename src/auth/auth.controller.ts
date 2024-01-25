@@ -10,7 +10,10 @@ export class AuthController {
   async login(
     @Body('email') email: string,
     @Body('password') password: string,
-  ): Promise<{ access_token: string; refresh_token: string }> {
+  ): Promise<
+    | { access_token: string; refresh_token: string }
+    | { status: number; message: string }
+  > {
     console.log('Received login request:', email, password);
     return this.authService.login(email, password);
   }

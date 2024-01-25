@@ -20,7 +20,6 @@ export class AuthService {
       );
       return user;
     } catch (error) {
-      // Handle the error, log it, or return null
       console.error('Error validating user:', error);
       return null;
     }
@@ -29,13 +28,27 @@ export class AuthService {
   async login(
     email: string,
     password: string,
-  ): Promise<{ access_token: string; refresh_token: string }> {
-    const user = await this.validateUser(email, password);
-    const payload = { username: email, id: user.id };
-    return {
-      access_token: this.jwtService.sign(payload),
-      refresh_token: this.generateRefreshToken(), // Generate or fetch refresh token as needed
+  ): Promise<
+    | { access_token: string; refresh_token: string }
+    | { status: number; message: string }
+  > {
+    const UserNotFound = {
+      status: 401,
+      message: 'User not found',
     };
+    try {
+      const user = await this.validateUser(email, password);
+      const payload = { username: email, id: user.id };
+      if (user) {
+        return {
+          access_token: this.jwtService.sign(payload),
+          refresh_token: this.generateRefreshToken(), // Generate or fetch refresh token as needed
+        };
+      }
+      return UserNotFound;
+    } catch (e) {
+      return UserNotFound;
+    }
   }
 
   generateRefreshToken(): string {
