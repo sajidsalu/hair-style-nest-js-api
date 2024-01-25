@@ -174,4 +174,16 @@ export class HairStyleService {
       totalPages: totalPages,
     };
   }
+
+  async updateHairStyleById(hairStyleId: string, categoryId: string) {
+    try {
+      const updatedHairStyle = await this.findHairStyle(hairStyleId);
+      if (categoryId) {
+        updatedHairStyle.category = categoryId;
+      }
+      updatedHairStyle.save();
+    } catch (error: any) {
+      throw new NotFoundException(error);
+    }
+  }
 }
