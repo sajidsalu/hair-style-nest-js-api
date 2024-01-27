@@ -84,7 +84,12 @@ export class HairStyleController {
   async updateGender(
     @Param('id') hairStyleId: string,
     @Body('categoryId') categoryId?: string,
+    @Body('gender') gender?: string,
   ) {
-    await this.hairstyleService.updateHairStyleById(hairStyleId, categoryId);
+    await this.hairstyleService.updateHairStyleById(
+      hairStyleId,
+      categoryId,
+      gender,
+    );
   }
 }

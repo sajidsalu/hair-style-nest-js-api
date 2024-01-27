@@ -175,12 +175,20 @@ export class HairStyleService {
     };
   }
 
-  async updateHairStyleById(hairStyleId: string, categoryId: string) {
+  async updateHairStyleById(
+    hairStyleId: string,
+    categoryId: string,
+    gender: string,
+  ) {
     try {
       const updatedHairStyle = await this.findHairStyle(hairStyleId);
       if (categoryId) {
         updatedHairStyle.category = categoryId;
       }
+      if (gender) {
+        updatedHairStyle.gender = gender;
+      }
+      console.log('updatedHairStyle', updatedHairStyle);
       updatedHairStyle.save();
     } catch (error: any) {
       throw new NotFoundException(error);
