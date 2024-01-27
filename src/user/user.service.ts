@@ -8,11 +8,30 @@ export class UserService {
   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
 
   async insertUser(user: User) {
-    const newUser = new this.userModel({
-      ...user,
-    });
-    const result = await newUser.save();
-    return result.id as string;
+    try {
+      const newUser = new this.userModel({
+        ...user,
+      });
+      const existingUser = await this.findUserByEmailId(newUser.email);
+
+      if (existingUser) {
+        return {
+          statusCode: 409,
+          message: 'Email already exists',
+        };
+      } else {
+        await newUser.save();
+        return {
+          statusCode: 200,
+          message: 'user has been created successfully',
+        };
+      }
+    } catch (e) {
+      return {
+        statusCode: 500,
+        message: 'failed to create user',
+      };
+    }
   }
 
   async getAllUsers() {
@@ -70,5 +89,8 @@ export class UserService {
       throw new NotFoundException('user not found');
     }
     return user;
+  }
+  private async findUserByEmailId(email: string) {
+    return await this.userModel.findOne({ email: email }).exec();
   }
 }

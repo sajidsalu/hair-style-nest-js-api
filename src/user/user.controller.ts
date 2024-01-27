@@ -8,8 +8,9 @@ export class UserController {
 
   @Post()
   async addUser(@Body('userDTO') userDto: User) {
-    const userId = this.userService.insertUser(userDto);
-    return { id: userId };
+    const response = await this.userService.insertUser(userDto);
+    console.log('response is', response);
+    return response;
   }
 
   @Get()

@@ -6,7 +6,7 @@ export const userSchema = new mongoose.Schema({
   password: { type: String, required: false },
   createdDate: { type: Date, required: true },
   type: { type: String, required: true },
-  imageUrl: { type: String, required: true },
+  imageUrl: { type: String, required: false },
 });
 
 export interface User extends mongoose.Document {
