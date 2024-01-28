@@ -13,18 +13,32 @@ export class UserService {
         ...user,
       });
       const existingUser = await this.findUserByEmailId(newUser.email);
-
-      if (existingUser && newUser.type === 'by email') {
-        return {
-          statusCode: 409,
-          message: 'Email already exists',
-        };
-      } else {
-        await newUser.save();
-        return {
-          statusCode: 200,
-          message: 'user has been created successfully',
-        };
+      if (newUser.type === 'by email') {
+        if (existingUser) {
+          return {
+            statusCode: 409,
+            message: 'Email already exists',
+          };
+        } else {
+          await newUser.save();
+          return {
+            statusCode: 200,
+            message: 'user has been created successfully',
+          };
+        }
+      } else if (newUser.type === 'by google') {
+        if (existingUser) {
+          return {
+            statusCode: 200,
+            message: 'user has been created successfully',
+          };
+        } else {
+          await newUser.save();
+          return {
+            statusCode: 200,
+            message: 'user has been created successfully',
+          };
+        }
       }
     } catch (e) {
       return {
