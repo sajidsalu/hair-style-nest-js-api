@@ -14,7 +14,7 @@ export class UserService {
       });
       const existingUser = await this.findUserByEmailId(newUser.email);
 
-      if (existingUser) {
+      if (existingUser && newUser.type === 'by email') {
         return {
           statusCode: 409,
           message: 'Email already exists',
