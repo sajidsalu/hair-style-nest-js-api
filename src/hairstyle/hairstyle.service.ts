@@ -133,17 +133,17 @@ export class HairStyleService {
   ): Promise<{ results: HairStyle[]; totalCount: number; totalPages: number }> {
     const { page, limit } = pageOptionsDto;
 
-    // Query MongoDB to get paginated hairstyles based on gender and category
-    const hairstylesQuery = this.hairstyleModel.find({
+    const query: any = {
       gender: gender,
-      category: category,
-    });
+    };
+    if (category !== '65a573b096fcee2c149752c9') {
+      query.category = category;
+    }
+    // Query MongoDB to get paginated hairstyles based on gender and category
+    const hairstylesQuery = this.hairstyleModel.find(query);
 
     // Create a separate query for counting documents
-    const countQuery = this.hairstyleModel.countDocuments({
-      gender: gender,
-      category: category,
-    });
+    const countQuery = this.hairstyleModel.countDocuments(query);
 
     // Execute the count query
     const count = await countQuery;
