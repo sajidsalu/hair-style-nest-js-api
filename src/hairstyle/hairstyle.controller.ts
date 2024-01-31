@@ -72,7 +72,12 @@ export class HairStyleController {
     @Param('gender') gender: string,
     @Param('category') category: string,
     @Query() pageOptionsDto: PageDto,
-  ): Promise<{ results: HairStyle[]; totalCount: number; totalPages: number }> {
+  ): Promise<{
+    results: HairStyle[];
+    totalCount: number;
+    totalPages: number;
+    hasNextPage: boolean;
+  }> {
     return this.hairstyleService.getAllHairStylesByGenderAndCategory(
       gender,
       category,

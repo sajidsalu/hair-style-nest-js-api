@@ -130,7 +130,12 @@ export class HairStyleService {
     gender: string,
     category: string,
     pageOptionsDto: PageDto,
-  ): Promise<{ results: HairStyle[]; totalCount: number; totalPages: number }> {
+  ): Promise<{
+    results: HairStyle[];
+    totalCount: number;
+    totalPages: number;
+    hasNextPage: boolean;
+  }> {
     const { page, limit } = pageOptionsDto;
 
     const query: any = {
@@ -150,6 +155,8 @@ export class HairStyleService {
 
     // Calculate total pages
     const totalPages = Math.ceil(count / limit);
+
+    const hasNextPage = (page + 1) * limit < count;
 
     // Apply pagination and retrieve hairstyles
     const hairstyles = await hairstylesQuery
@@ -172,6 +179,7 @@ export class HairStyleService {
       results: transformedHairstyles,
       totalCount: count,
       totalPages: totalPages,
+      hasNextPage: hasNextPage, //TODO
     };
   }
 
