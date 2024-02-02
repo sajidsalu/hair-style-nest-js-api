@@ -156,7 +156,8 @@ export class HairStyleService {
     // Calculate total pages
     const totalPages = Math.ceil(count / limit);
 
-    const hasNextPage = (page + 1) * limit < count;
+    //const hasNextPage = (page + 1) * limit < count;
+    const hasNextPage = page < totalPages - 1;
 
     // Apply pagination and retrieve hairstyles
     const hairstyles = await hairstylesQuery
